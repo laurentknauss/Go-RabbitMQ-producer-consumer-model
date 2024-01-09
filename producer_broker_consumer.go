@@ -24,8 +24,9 @@ func failOnError(err error, msg string) {
 
 /*
 The `producer` function is responsible for sending messages to the RabbitMQ queue named "hello".
-It usesa for loop to send 5 messages with incremental numbers in the body.
+It uses a for loop to send 5 messages with incremental numbers in the body.
 */
+
 func producer(ctx context.Context, ch *amqp.Channel, totalMessages int) {
 	for i := 0; i < totalMessages; i += 2 {
 		var body = fmt.Sprintf("message %d", i)
@@ -52,6 +53,7 @@ Messages are automatically acknowledged(`true` for auto-acknowledgment) once rec
 The `consumer` function runs in a goroutine that continously prints the received messages bodies.
 The program waits for messages to arrive until the program is stopped.
 */
+
 func consumer(ch *amqp.Channel, wg *sync.WaitGroup, totalMessages int) {
 	defer wg.Done()
 	msgs, err := ch.Consume(
@@ -79,9 +81,9 @@ func consumer(ch *amqp.Channel, wg *sync.WaitGroup, totalMessages int) {
 
 /*
 The `main` function establishes a connection to the RabbiMQ server, opens a channel and declares the "hello" queue.
-
-	Then it launchs both the producer and the consumer functions concurrently with the use of goroutines.
+Then it launches both the producer and the consumer functions concurrently with the use of goroutines.
 */
+
 func main() {
 	conn, err := amqp.Dial("amqp://guest:guest@0.0.0.0:5672/")
 	failOnError(err, "Failed to connect to RabbitMQ")
@@ -111,5 +113,6 @@ func main() {
 	go producer(ctx, ch, 50)
 	go consumer(ch, &wg, 25)
 
-	wg.Wait() // Waits for all messages to be consumed/processed .
+	// Waits for all messages to be consumed/processed .
+	wg.Wait()
 }
