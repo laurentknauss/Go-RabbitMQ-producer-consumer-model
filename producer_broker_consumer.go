@@ -1,6 +1,6 @@
 /*
 This codebase  illustrates  a basic implentation of a producer-consumer model using rabbitMQ in Go,
-where the producer sendsa series of messages to a queue, and the consumer receives and processes these messages.
+where the producer sends a series of messages to a queue, and the consumer receives and processes these messages.
 The use ofRabbitMQ allows for asynchronuous, decouipled communication between producer of data and consumer of data.
 */
 
